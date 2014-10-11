@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML//EN">
+<!-- saved from url=(0066)https://www.cs.uoregon.edu/Classes/14F/cis425/assignments/hw1.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>CIS 425: Assignment 1</title>
+  <script type="text/javascript" src="./CIS 425  Assignment 1_files/MathJax.js"></script>
+
+</head>
+<body bgcolor="white">
+<h2>Due on Tuesday, October 7, 2014 before 8:00 AM</h2>
+<h3>Submit to <a href="https://systems.cs.uoregon.edu/apps/turnin.php">turnin page</a></h3>
+<p>Questions to help you understand the reading (<strong>not to be turned
+    in</strong>):
+</p><pre>    - What is the difference between a partial and a total function?
+    - What does it mean for a function to be computable?
+    - What is the halting problem?
+    - Give an example of a non computable function (not based on the
+      halting problem)
+
+    - What is a grammar? How do you define it (i.e. understand
+      what is a non-terminal, terminal, productions, root)
+    - What is the difference between a regular, context free and
+      context sensitive  grammar? 
+    - What is a parse tree?
+    - What is a derivation?
+    - What is an ambiguous grammar? 
+    - How do you solve the ambiguity? 
+    - How can you show that a grammar is ambiguous? 
+    - Explain the difference between postfix, prefix and infix notation. 
+    - What is the difference between a compiler and an interpreter?
+    - Explain the different phases of a compiler 
+
+    - Discuss the advantages/disadvantages of functional versus
+      imperative programming
+    - What is the von Neumann bottleneck?<br>
+    - What does referential transparency mean?
+    - What does lazy evaluation mean?
+
+    - To which programming paradigm does each of the following languages belong
+      (Use F for functional, P for imperative, and O for object-oriented)?
+      Is each language conventionally compiled or interpreted
+      (use C for compiled, T for interpreted, B for both)?
+        (a) C
+        (b) C++
+        (c) Java
+        (d) JavaScript
+        (e) Perl
+        (f) Python
+        (g) Lisp
+        (h) Scheme
+        (i) ML
+        
+    - Categorize each of the following features as an advantage of either high-level
+      or low-level programming languages
+      (use H for high-level, L for low-level)
+        (a) code runs faster on machines
+        (b) easy to write and maintain
+        (c) easy to port to different machines
+        (d) easy to debug (and detect errors)
+
+    - Which of the following belong to all compilers, which belong to all interpreters?
+        (a) lexical analyzer
+        (b) syntax analyzer
+        (c) semantic analyzer
+        (d) intermediate code generator
+        (e) code optimizer
+        (f) machine code generator
+
+    - Which of the following are advantages of compilers?
+      Which are advantages of interpreters?
+        (a) generated code can run many times
+        (b) can afford heavy weight optimizations
+        (c) can pre-examine input program for semantic (type) errors
+        (d) have full knowledge of both program input and program implementation
+        (e) flexible, can easily adapt program behavior dynamically
+</pre>
+
+<h3>Problems</h3>
+<ol>
+  <li>
+    Mitchell text: 4.11.
+  </li>
+  <li>
+    <p>For each of the following strings, draw a parse tree
+with respect to the following grammar for arithmetic expressions: </p>
+    <ul>
+      <pre>E ::= E + T | E - T | T<br><br>T ::= T * F | T / F | F<br><br>F ::= <i>num</i> | (E)<br><br></pre>
+    </ul>
+    <ol type="a">
+      <li> 1 * 2 - (3 / 4) </li>
+      <li> 1 - 2 + 3 </li>
+      <li> 1 * 2 - 3 / 4 </li>
+    </ol>
+    <p></p>
+  </li>
+  <li>
+    <p>The following grammar is motivated by declarations
+in C: </p>
+    <ul>
+      <pre>Declaration ::= Type Declarator ;<br><br>       Type ::= int | char<br><br> Declarator ::= * Declarator<br><br>              | Declarator [ <i>num</i> ]<br><br>              | Declarator ( Type )<br><br>              | ( Declarator )<br><br>              | <i>name</i>
+
+      </pre>
+    </ul>
+    <p>Prove the syntactic ambiguity of this grammar. </p>
+  </li>
+  <li>
+    <p>Let L be the language over the alphabet <tt>{a,b,c}</tt>,
+which consists of at least three consecutive b's (For example, L
+includes the strings <tt>bbb</tt> and <tt>abcbbba</tt>, but not <tt>abbab</tt>).
+    </p>
+    <p>Write a BNF grammar for L. </p>
+  </li>
+  <li>
+    <p>(This problem requires JavaScript to be displayed properly.)</p>
+    <p>
+      <!-- Handy LaTeX macros -->
+      <span style="display: none">
+        \(
+          % Define \pair{x} to put x in angle brackets.
+          \newcommand\pair[1]{\langle #1 \rangle}
+          % Define \blank as an underlined double quad space.
+          \newcommand\blank{\mathord{\underline{\qquad}}}
+        \)
+      </span>
+      This problem asks you about operational semantics for a simple language
+      with assignment and addition. The expressions of this language are given
+      by the grammar
+      $$
+        e ::= n \mid x \mid x = e \mid e + e
+      $$
+      where \(n\) can be any number (0, 1, 2, 3, …). We can define the
+      operational semantics with
+      respect to a mapper \(\sigma : \mathit{Var} \to \mathcal{N}\), where
+      \(\mathit{Var}\) is the set of variables that may appear in expressions
+      and \(\mathcal{N}\) is the set of numbers that can be values of variables.
+      To have some reasonable terminology, we will call \(\sigma\) a
+      <em>store</em> and a pair \(\pair{e, \sigma}\) a <em>state</em>.
+    </p>
+    <p>
+      When a program executes, we hope to reach a <em>final state</em> \(\pair{
+      e, \sigma}\) where \(e\) is a number, which we will call a <em>value</em>.
+    </p>
+    <ol type="a">
+      <li>
+        <p>
+          Let's look at arithmetic expressions. Two rules for evaluating
+          summands of a sum are
+          $$
+            \begin{array}{rcl}
+              \pair{a_1,\sigma} &amp; \longrightarrow &amp; \pair{a'_1,\sigma'} \\ \hline
+              \pair{a_1 + a_2, \sigma} &amp; \longrightarrow &amp;
+                \pair{a'_1 + a_2, \sigma'}
+            \end{array}
+          $$
+          $$
+            \begin{array}{rcl}
+              \pair{a_2, \sigma} &amp; \longrightarrow &amp; \pair{a'_2, \sigma'} \\ \hline
+              \pair{n + a_2, \sigma} &amp; \longrightarrow &amp;
+                \pair{n + a'_2, \sigma' }
+            \end{array}
+          $$
+        </p>
+        <p>
+          We assume that it is a single execution step to add two numbers, so
+          we have the rule
+          $$
+            \begin{array}{c}
+              n, m, p \text{ are numbers with } n + m = p \\ \hline
+              \pair{n + m, \sigma} \quad \longrightarrow \quad \pair{p, \sigma}
+            \end{array}
+          $$
+        </p>
+        <p>
+          The value of a variable depends on the store, as specified by this
+          evaluation rule
+          $$
+            \pair{x, \sigma} \quad \longrightarrow \quad \pair{\sigma(x),\sigma}
+          $$
+        </p>
+        <p>
+          Show how these rules let you evaluate an expression \(x+y\) to
+          a sum of numbers. Assume \(\sigma\) is a store with \(\sigma(x) = 2\)
+          and \(\sigma(y) = 3\). Write your answer as an execution sequence of
+          the form below, <em>with an explanation</em>.
+          $$
+            \pair{x + y, \sigma} \longrightarrow
+              \pair{\blank + \blank, \sigma} \longrightarrow
+              \pair{\blank + \blank, \sigma} \longrightarrow
+              \pair{\blank, \sigma}
+          $$
+        </p>
+      </li>
+      <li>
+        <p>
+          \(\mathit{Put}\) is the function on stores with \(\mathit{Put}(\sigma,
+          x, n) = \sigma'\) with \(\sigma'(x) = n\) and \(\sigma'(y) =
+          \sigma(y)\) for all variables \(y\) other than \(x\). Using
+          \(\mathit{Put}\), the execution rule for assignment can be written
+          $$
+            \pair{x = n, \sigma} \quad\longrightarrow\quad
+              \pair{n, \mathit{Put}(\sigma, x, n)}
+          $$
+        </p>
+        <p>
+          In this particular language, an assignment changes the store, as
+          usual. In addition, as you can see from the operational semantics of
+          assignment, an assignment is an expression whose value is the value
+          assigned.
+        </p>
+        <p>
+          If we have an assignment with an expression that has not been
+          evaluated to a number, then we can use this evaluation rule:
+          $$
+            \begin{array}{rcl}
+              \pair{e, \sigma} &amp; \longrightarrow &amp; \pair{e', \sigma'} \\ \hline
+              \pair{x = e, \sigma} &amp; \longrightarrow &amp; \pair{x = e', \sigma'}
+            \end{array}
+          $$
+        </p>
+        <p>
+          Combining these rules with the rules from part a, show how to execute
+          \(\pair{x = x + 3, \sigma}\) when \(\sigma\) is a store with
+          \(\sigma(x) = 1\). Write your answer as an execution sequence of the
+          form below, <em>with an explanation</em>.
+          $$
+            \pair{x = x + 3, \sigma} \longrightarrow
+              \pair{x = \blank + \blank, \sigma} \longrightarrow
+              \pair{x = \blank, \sigma} \longrightarrow
+              \pair{\blank, \blank}
+          $$
+        </p>
+      </li>
+      <li>
+        Show how to execute \(\pair{(x = 3) + x, \sigma}\) in the same level of
+        detail, <em>including an explanation</em>.
+      </li>
+      <li>
+        Show how to execute \(\pair{x = (x = x + 3) + (x = x + 5), \sigma}\)
+        when \(\sigma\) is a store with \(\sigma(x) = 1\) in the same level of
+        detail, <em>including an explanation</em>.
+      </li>
+    </ol>
+  </li>
+</ol>
+<p>
+  The following problems are <strong>optional</strong> and <strong>will not be
+  graded</strong>.
+</p>
+<ol start="6">
+  <li>
+    Use lambda calculus reduction to find a shorter expression for \((\lambda p.
+    \lambda q. \lambda r. p q r)(\lambda p. \lambda q. p q r)\). Begin by
+    renaming bound variables. You should do all possible reductions to get to
+    the shortest possible expression. What goes wrong if you do not rename bound
+    variables?
+  </li>
+  <li>
+    <p>
+      A programmer is having difficulty debugging the following C program. In
+      theory, on an “ideal” machine with infinite memory, this
+      program would run forever. (In practice, this program crashes because it
+      runs out of memory, since extra space is required every time a function
+      call is made.)
+    </p>
+<pre>int f(int (*g)(...)){ /* g points to a function that returns an int */
+  return g(g);
+}
+int main(){
+  int x;
+  x = f(f);
+  printf("Value of x = %d\n", x);
+  return 0;
+}</pre>
+    <p>
+      Explain the behavior of the program by translating the definition of
+      <code>f</code> into lambda calculus and then reducing the application
+      <code>f(f)</code>. This program assumes that the type checker does not
+      check the types of arguments to functions.
+    </p>
+  </li>
+</ol>
+<hr>
+<address>Maintained by:
+<a href="mailto:maurerl@cs.uoregon.edu">The GTF</a>
+</address>
+
+
+</body></html>

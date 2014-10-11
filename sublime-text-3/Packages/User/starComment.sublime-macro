@@ -1,0 +1,75 @@
+[
+	{
+		"args":
+		{
+			"characters": "/**"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"characters": "\n"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"characters": " *"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"characters": "\n*"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"characters": "\n*"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"characters": "\n*"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"characters": "/"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"by": "lines",
+			"forward": false
+		},
+		"command": "move"
+	},
+	{
+		"args":
+		{
+			"by": "lines",
+			"forward": false
+		},
+		"command": "move"
+	},
+	{
+		"args":
+		{
+			"by": "lines",
+			"forward": false
+		},
+		"command": "move"
+	}
+]

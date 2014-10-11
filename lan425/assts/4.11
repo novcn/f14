@@ -1,0 +1,79 @@
+Lazy language: 
+	call f(e) by passing UNEVALUATED argument to body
+	If the value of _e_ is needed, it is evaulated as part of the function body
+
+	fun g(x,y) = if = x=0
+				then 1
+				else if x+y = 0
+					then 2
+					else 3;
+
+Lazy language:
+	
+	ex: g(3,4+2)
+	we evaluate the test "if x=0", by looking @ the arguement 3.
+	if it were true, we would return 1, without ever looking @ (4+2)
+	---basically it doesn't do things until it has to---
+
+________________________________________________________________________________
+
+(a)
+|Q|
+Assume we evaluate g(e1 , e2) by starting to evaluate g, e1 , and e2 in parallel,
+where g is the function defined above. Is it possible that one process will have
+to wait for another to complete? How can this happen?
+
+|A|
+//It depends if the values of variables can change or not. This problem doesn't give
+//information about if they can (like in imperative languages), or if they don't (like
+//in functional languages.)
+
+if e1 = n (operator) m, then the value of e1 will need to be evaluated for 
+"..if x + y = 0". Otherwise the processes will not have to wait for eachother.
+They will all be evaulated even if they don't need to be (like if e1(or x)=0)
+
+(b)
+|Q|
+Now, suppose the value of e1 is zero and evaluation of e2 terminates with an
+error. In the normal (i.e., eager) evaluation order that is used in C and other
+common languages, evaluation of the expression g(e1 , e2 ) will terminate in
+error. What will happen with lazy evaluation? Parallel evaluation?
+ 
+|A|
+With lazy evaluation the function will not terminate with an error, since if x = 0
+will evaluate to true and then 1 will return.
+With parallel evaluation the error will be evaluated, since everything is evaluated
+whether or not the relevant if statements return true. Assuming that the parallel 
+evaluation will terminate when it sees an error, then this is what will happen even
+though if x = 0 still evaluates to true
+
+(c)
+|Q|
+Suppose you want the same value, for every expression, as lazy evaluation,
+but you want to evaluate expressions in parallel to take advantage of your
+new pocket-sized multiprocessor. What actions should happen, if you evaluate
+g(e1 , e2 ) by starting g, e1 , and e2 in parallel, if the value of e1 is zero and evaluation of e2 terminates in an error?
+
+|A|
+Each expression will still be evaluated in parallel so it will be seen that e2
+terminates with an error (and all other evaluations as well will be seen.) However,
+since the path of e1 is taken since (if x = 0) is true, then an error will not terminate
+and "then 1" will still return
+
+(d)
+|Q|
+Suppose now that the language contains side effects. What if e1 is z and e2
+contains an assignment to z; can you still evaluate the arguments of g(e1 , e2 ) in
+parallel? How? Or why not?
+
+|A|
+The side affect is relevant since if e2 contains an assignment to z, then this causes the evaluation of e1 to be indeterminant (this is a race condition). This sheds light on
+why, in functional programming variables do not change value.
+We could still evaluate the arguements in parallel by instead of changing the value of z in e2 we would copy the value into a new variable, z' and alter that instead of z. Then, if the path of e2 is returned instead of e1, we would use the value of z', e.i. return it or whatever is necessary.
+
+
+
+
+
+
+
