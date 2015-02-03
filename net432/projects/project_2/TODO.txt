@@ -1,0 +1,22 @@
+Client:
+
+
+Server:
+
+[X]: Fix it so second client can actually send say (after H topology)
+[X]: Fix it so that the second client can actually receive says (and other)
+[X]: Correct the uid detection
+[X]: Fix loop detection
+
+[X]: Implement soft state feature for resubscribe
+[]:
+[]:
+[]: Fix memory leaks
+
+
+Wishlist:
+
+[]: Figure out why the order is off for the ? requests (see pic on phone)
+[]: Extra credit
+
+Test the loop shit for leavwes

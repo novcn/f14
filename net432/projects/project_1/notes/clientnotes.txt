@@ -1,0 +1,25 @@
+Client connects
+	Client connects to the server
+
+logs in
+	
+	login request(0): The message contains an additional 32 byte username field. Here's the layout of the packet:
+	 0                   1                   2                   3
+	 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+	|                32-bit message type identifier (0)             |
+	+---------------------------------------------------------------+
+	|                     32-byte user name                         |
+	                             ...
+	|                                                               |
+	+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+	For the login, logout, join, and leave requests, the server must update its records of which users are present and what channels the user belongs to.
+
+
+joins “Common”
+
+Datastructures:
+
+
+Struct 

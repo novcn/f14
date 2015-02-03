@@ -1,0 +1,42 @@
+README
+Thank you for taking the time to read this.
+
+CS432 Networks; Prof. Reza
+DUE: Nov 7, 2014
+Undergraduate team of:
+
+Colin Gabrielson
+Grant Harris
+
+Programming language used: C
+
+We were able to create a dynamic chatroom emulator for this programming assignment.
+The chatroom consists of a server and of multiple clients.
+The biggest problem that we ran into was the rebroadcast of information from one client
+to another, through the server.
+
+The server has access to two dynamic data structures, a linked-list structure 
+to hold information about the different chat channels, and a user structure to 
+keep track of who is on which channel.
+
+Good news: We were able to implement these data structures robustly and without leaks on the server side. However, when it came to redistributing the organized information to the 
+clients we ran into some snags. That is, we are able to receive all information from each 
+client and organize it correctly, but we were unable to redistribute some of the information to every subscribed user.
+
+Creating a correctly formatted packet containing the information to be 
+redistributed proved to be nontrivial.
+
+Our clients and server support
+/join <channel>
+/exit
+/switch
+/who <channel>
+
+Our server alone supports
+/list <channels>
+/say <response> * Receives correctly, does not relay message
+
+This program may easily be compiled with the make command.
+We used many flags while compiling to make sure that our 
+code is error free. These flags that we were given to include are
+-g -W -Wall -Werror

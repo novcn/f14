@@ -1,0 +1,59 @@
+-Implement both client and server sides of the DuckChat protocol.
+	-users run client software to connect to a server and communicate with other connected users
+	-users join a channel and communicate w// poeple on the channel
+		-the can join as many channels as they want, and create their own channels
+
+Will take 3 CLI args:
+	-host name
+	-port number
+	-username
+
+when client starts:
+	-auto connects w/ chat server
+	-joins channel called "Common"
+	-provides the user a promt ???
+	-text entered is visible by all users on channel* (see exception)
+
+Exception*
+	- /exit logout and exit software 
+	- /jion channel join (become subscribed in) the named channel, create it if it doesn't exist
+	- /leave channel leave "channel"
+	- /list list the names of all channels
+	- /who channel list the users who are on the named channel
+	- /switch channel switch to an existing named channel that the user has already joined
+
+Active Channels
+	-user can listen to multiple channels
+	-user can only be active (send text) on one at a time
+	-most recently joined channel ::= active channel
+	-client should keep track of the active channel for user (so /switch doesn't require sending message to server)
+	-join command requires message to server
+	-If user switches to non-subscribed channel, error @ the user
+	-if switch fails, active channel should be unchanged
+
+Text Format:
+[channel[username]: text
+
+???
+Before displaying text, the client application should print many backspace characters ('\b' in C) to erase the prompt and anything the local user has typed. (Carefully test this on ix if you are using Java.) After the text is printed, the client should redisplay the prompt and any user input. This means the client will need to keep track of the user's input as they are typing it.
+???
+
+Server:
+	-Implemented with UDP
+	-Takes two arguements
+		-Host 
+			"localhost"
+			| IP addr of an interface connected to the machine
+		-Port
+
+	-Only interacts with debugging messages
+		-contents of message: [channel][user][message]
+	-primary job is to deliver messages from user X to all users on X's active channel
+	-Keeps track of individual users and channesls the are sub'd to (Data Structure)
+	-Channel creation and deletion are handled implicitly (Whenev a chan has no users, it is deleted)
+	-Ignore messages from users who are not logged in.
+
+Protocol:
+	-Runs over UDP
+	-Each message begins with 32-bit type identifier.(how to interpret the rest of message) *case*
+	

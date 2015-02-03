@@ -1,0 +1,73 @@
+TODO 
+Colin
+[x]: Further test the tokenizer and the '\n' issue
+[x]: Implement switch_channel on client side
+[x]: Implement select() on client side
+[x]: Finish each packet creation on client side+
+[x]: Move the if-else structure to its own function
+[x]: Change the if-else to a switch statement
+[x]: setup switch statement on server to accept and parse all packets 
+
+[x]: write getch function
+[x]: implement raw_dog mode
+[x]: get each character at a time (non-blocking) with getchar
+[x]: add each char to a buffer until '\0' pushed
+[x]: still able to parse commands
+
+[x]: get nonblocking working client side
+[x]: correctly handle from server say
+[x]: correctly handle from server list
+[x]: correctly handle from server who
+[x]: correctly handle from server error
+[]: fix /leave segfault
+
+[]: fix: Send To Req lIST: : Bad address
+
+
+
+Grant
+[]: Test the client-server examples from http://www.beej.us/guide/bgnet/output/html/multipage/clientserver.html#datagram 
+on your machine. 
+[]: If they work, figure out why ours isnt (ours is strongly based on them) otherwise test them
+on IX to confirm that it's not an issue with your machine's setup.
+Once the server is able to receive packets from client:
+[]: extract req_type ID from packet, set up the case: structure for each req_type
+[]: Implement logic for Join and Logout (they similarily add user to the linked list)
+
+
+Gameplan:
+
+Client connects, logs in, and joins “Common”.
+Client reads lines from the user and parses commands.
+Client correctly sends Say message.
+Client uses select() to wait for input from the user and the server.
+Client correctly sends Join, Leave, Login, and Logout and handles Switch.
+Client correctly sends List and Who.
+Server can accept connections.
+Server handles Login and Logout from users, and keeps records of which users are logged in.
+Server handles Join and Leave from users, keeps records of which channels a user belongs to, and keeps records of which users are in a channel.
+Server handles the Say message.
+Server correctly handles List and Who.
+Create copies of your client and server source. Modify them to send invalid packets to your good client and server, to see if you can make your client or server crash. Fix any bugs you find.
+
+
+
+
+
+reallylongstringname  
+
+
+    // printf("-----------------\n");
+
+    //else c = getch()
+    //getchar() waits, so the message wont display until you get a key
+    //you have to use select to get the char
+    //you should write getch (nonblocking) find getch
+
+    //once getch returns non-zero when it receives a character press
+      //then call getchar()
+    //if statement structure so that back-space
+    //getchar returns an ascii number, so you want the range to be valid characters
+    //if it is a valid character you increment, then you add it to your buffer at this
+    //index, so you build a buffer, 
+    //at the end memset 
